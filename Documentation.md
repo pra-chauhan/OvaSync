@@ -237,73 +237,56 @@ Based on prediction results, users receive suggestions related to:
 • Preventive health practices
 
 ---
+## 6. Diet recommendation using LLM
+using groq_api_key to generate pcos risk  centric diet. 
+consider user's current nee then generate diet for them.
+
+## 7. Doctors Teleconsultation.
+user can share whole histroy pdf to doctor during convo. using - pdf repot right now. 
+
 
 # 8. Impact and Benefits
-
 NariCareAI contributes to women's healthcare by providing:
-
 ## Early Awareness
-
 Women can identify potential health risks before symptoms become severe.
-
 ## Preventive Healthcare
-
 The system promotes healthier lifestyle choices that may help manage PCOS risk factors.
-
 ## Accessible Screening
-
 Preliminary risk analysis is possible without immediate medical tests.
-
 ## Open Source Collaboration
-
 As an open-source platform, developers and researchers can contribute to improving the system.
 
 ---
 
 # 9. Future Integrations
-
 The platform can be expanded with additional features in future versions.
-
 ## Mobile Application
-
 Develop Android and iOS versions for greater accessibility.
-
 ## Wearable Device Integration
-
 Integrate with fitness trackers to monitor:
-
 • Activity levels  
 • Sleep patterns  
 • Heart rate  
 
-## Healthcare Provider Integration
-
-Enable connections with healthcare professionals for consultation and diagnosis.
+## Doctor's teleconsultation improved. 
+Doctor's can get a key to nter user profile and see their whole histry report.
+after teleconsultation user can read the whole communication summary - in patient language.
 
 ## Research Data Contribution
-
 Allow users to share anonymized health data to support future research and better AI models.
 
 ## AI Health Assistant
-
 An AI chatbot could help answer women's health questions and provide guidance.
-
 ---
 
 # 10. Disclaimer
-
 NariCareAI is intended for **educational and preliminary screening purposes only**.
-
 It **does not provide medical diagnosis** and should not replace consultation with qualified healthcare professionals.
-
 Users experiencing symptoms or health concerns should consult a licensed medical practitioner.
-
 ---
 
 # Conclusion
-
 NariCareAI demonstrates how **machine learning, open-source technologies, and preventive healthcare approaches** can be combined to support women's health awareness.
-
 By enabling early screening and offering actionable health insights, the platform aims to empower women with better knowledge and control over their health.
 
 ---
