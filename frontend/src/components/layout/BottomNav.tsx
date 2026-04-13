@@ -8,7 +8,7 @@ const navItems = [
   { to: '/diet', icon: Salad, label: 'Diet' },
   { to: '/exercise', icon: Dumbbell, label: 'Exercise' },
   { to: '/yoga', icon: Heart, label: 'Yoga' },
-  { to: '/daily-care', icon: Clock, label: 'Care' },
+  { to: '/daily-care', icon: Clock, label: 'Doctor' },
 ];
 
 const BottomNav = () => (

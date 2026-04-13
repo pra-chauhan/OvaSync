@@ -27,7 +27,7 @@ export interface DailyLog {
 export type CyclePhase = 'period' | 'follicular' | 'ovulation' | 'luteal' | 'pms';
 
 export const PHASE_COLORS: Record<CyclePhase, string> = {
-  period: 'bg-primary',
+  period: 'bg-red-400',
   follicular: 'bg-sage',
   ovulation: 'bg-accent',
   luteal: 'bg-secondary',

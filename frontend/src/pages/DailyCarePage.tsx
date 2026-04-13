@@ -55,7 +55,7 @@ const DailyCarePage = () => {
         </h1>
       </motion.div>
 
-      {/* 🔥 DOCTOR CONSULTATION */}
+      {/*  DOCTOR CONSULTATION */}
       <GlassCard className="p-4 border-l-4 border-primary">
         <h3 className="text-lg font-bold text-foreground">👩‍⚕️ Consult Doctor</h3>
         <p className="text-sm text-muted-foreground mt-1">
@@ -87,12 +87,12 @@ const DailyCarePage = () => {
             <h3 className="text-lg font-bold mb-2">PCOS Report</h3>
 
             {/* 👉 Replace with your real model data if available */}
-            <p className="text-sm">Risk Score: <b className="text-red-500">High</b></p>
-            <p className="text-sm">Lifestyle Score: Moderate</p>
-            <p className="text-sm">Stress Risk: High</p>
+            <p className="text-sm">Risk Score: <b className="text-red-500">High - For instance</b></p>
+            <p className="text-sm">Lifestyle Score: Moderate ( for instance) </p>
+            <p className="text-sm">Stress Risk: High ( for instance) </p>
 
             <p className="text-xs mt-2 text-muted-foreground">
-              Key Factors: Irregular cycle, BMI, low hydration
+              Key Factors: Irregular cycle, BMI, low hydration -- currently system generates random data, but will be replaced with real model predictions in the future.
             </p>
 
             <button
