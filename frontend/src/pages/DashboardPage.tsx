@@ -3,6 +3,10 @@ import { motion } from 'framer-motion';
 import GlassCard from '@/components/ui/GlassCard';
 import OrbStat from '@/components/ui/OrbStat';
 import ProgressBar3D from '@/components/ui/ProgressBar3D';
+import { getLogs } from '@/lib/store';
+import { cn } from '@/lib/utils';
+import { Clock,  Footprints, Moon, Pill } from 'lucide-react';
+
 import {
   getProfile,
   getTodayLog,
@@ -22,6 +26,15 @@ const DashboardPage = () => {
 
   const dayOfCycle = getDayOfCycle(profile.lastPeriodDate);
   const phase = getCyclePhase(dayOfCycle, profile.cycleLength);
+
+  const REMINDERS = [
+  { key: 'water', icon: Droplets, label: 'Drink Water', interval: 'Every 2 hours', color: 'text-sage' },
+  { key: 'walk', icon: Footprints, label: '10-min Walk', interval: 'After meals', color: 'text-primary' },
+  { key: 'stretch', icon: Clock, label: 'Stretch Break', interval: 'Every 3 hours', color: 'text-accent' },
+  { key: 'sleep', icon: Moon, label: 'Sleep by 10 PM', interval: 'Daily', color: 'text-secondary' },
+];
+
+const MEDICATIONS = ['Vitamin D', 'Iron', 'Inositol', 'Omega-3', 'Folic Acid', 'Zinc', 'Magnesium']
 
   const bmr = calculateBMR(profile.weight, profile.height, profile.age);
   const tdee = calculateTDEE(bmr, profile.activityLevel);
@@ -52,6 +65,32 @@ const DashboardPage = () => {
     return "You're maintaining good health habits — keep your routine consistent.";
   };
 
+  const [activeReminders, setActiveReminders] = useState<Set<string>>(
+    new Set(JSON.parse(localStorage.getItem('aura_reminders') || '["water","walk","stretch","sleep"]'))
+  );
+
+  const logs = getLogs();
+
+  useEffect(() => { saveTodayLog(log); }, [log]);
+
+  const toggleReminder = (key: string) => {
+    setActiveReminders(prev => {
+      const n = new Set(prev);
+      n.has(key) ? n.delete(key) : n.add(key);
+      localStorage.setItem('aura_reminders', JSON.stringify([...n]));
+      return n;
+    });
+  };
+
+  const toggleMed = (med: string) => {
+    setLog(prev => ({
+      ...prev,
+      medications: prev.medications.includes(med)
+        ? prev.medications.filter(m => m !== med)
+        : [...prev.medications, med],
+    }));
+  };
+
   return (
     <div className="space-y-5">
 
@@ -65,11 +104,11 @@ const DashboardPage = () => {
         </p>
       </motion.div>
 
-      {/*  AI HEALTH INSIGHTTT */}
+       {/* AI HEALTH INSIGHTTT
       <GlassCard tilt className="border-l-4 border-primary">
         <p className="text-xs font-semibold text-primary mb-1">🤖 AI Health Insight</p>
         <p className="text-sm text-foreground">{getAIInsight()}</p>
-      </GlassCard>
+      </GlassCard> */}
 
       {/* Phase Card (Improved Emotional) */}
       <GlassCard tilt className="text-center">
@@ -90,17 +129,17 @@ const DashboardPage = () => {
         />
       </GlassCard>
 
-      <GlassCard className="text-center">
+      {/* <GlassCard className="text-center">
         <p className="text-xs text-muted-foreground">🔥 Consistency Streak</p>
         <h2 className="text-xl font-bold text-primary">{streak} days</h2>
-      </GlassCard>
+      </GlassCard> */}
 
-      {/* Water Tracker */}
+      {/* Water Tracker
       <div className="flex justify-around">
         <OrbStat value={log.water} max={8} label="glasses" color="text-sage" />
-      </div>
+      </div> */}
 
-      {/* Quick Add */}
+      {/* Quick Add
       <div className="grid grid-cols-1 gap-1">
         <GlassCard className="text-center p-3">
           <Droplets size={18} className="mx-auto mb-1 text-sage" />
@@ -124,7 +163,7 @@ const DashboardPage = () => {
             </button>
           </div>
         </GlassCard>
-      </div>
+      </div> */}
 
       
       <GlassCard className="border-l-4 border-accent">
@@ -132,6 +171,59 @@ const DashboardPage = () => {
         <p className="text-sm text-foreground">
           Based on your current phase and activity, maintaining hydration and light exercise today can improve hormonal balance.
         </p>
+      </GlassCard>
+
+      {/* Reminders */}
+      <GlassCard>
+        <h3 className="font-display text-lg text-foreground mb-3">Reminders</h3>
+        <div className="space-y-2">
+          {REMINDERS.map(({ key, icon: Icon, label, interval, color }) => (
+            <div key={key} className="flex items-center gap-3">
+              <Icon size={18} className={color} />
+              <div className="flex-1">
+                <p className="text-sm font-semibold text-foreground">{label}</p>
+                <p className="text-[10px] text-muted-foreground">{interval}</p>
+              </div>
+
+              <button
+                onClick={() => toggleReminder(key)}
+                className={cn(
+                  'w-12 h-6 rounded-full relative transition-all',
+                  activeReminders.has(key) ? 'bg-primary' : 'bg-muted',
+                )}
+              >
+                <motion.div
+                  className="w-5 h-5 rounded-full bg-white absolute top-0.5 shadow-md"
+                  animate={{ left: activeReminders.has(key) ? 26 : 2 }}
+                  transition={{ type: 'spring', stiffness: 500, damping: 30 }}
+                />
+              </button>
+            </div>
+          ))}
+        </div>
+      </GlassCard>
+
+      {/* Medication Tracker */}
+      <GlassCard>
+        <h3 className="font-display text-lg text-foreground flex items-center gap-2 mb-3">
+          <Pill size={18} className="text-primary" /> Medication Tracker
+        </h3>
+        <div className="flex flex-wrap gap-2">
+          {MEDICATIONS.map(med => (
+            <button
+              key={med}
+              onClick={() => toggleMed(med)}
+              className={cn(
+                'pill-badge text-xs',
+                log.medications.includes(med)
+                  ? 'bg-sage text-sage-foreground'
+                  : 'glass-card text-foreground',
+              )}
+            >
+              {log.medications.includes(med) ? '✓ ' : ''}{med}
+            </button>
+          ))}
+        </div>
       </GlassCard>
 
       {/* Calories */}
