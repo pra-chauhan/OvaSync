@@ -144,7 +144,7 @@ npm run dev
 http://localhost:5173
 
 ### 🤝 Contributing
-We welcome contributions from developers, researchers, and healthcare enthusiasts who are passionate about improving women's health through technology.
+I welcome contributions from developers, researchers, and healthcare enthusiasts who are passionate about improving women's health through technology.
 
 # Ways to contribute:
 Improve machine learning models
@@ -163,19 +163,10 @@ Push to your fork
 `git push origin feature/your-feature-name`
 Create a Pull Request
 
-### 🌍 Open Source Vision
-NariCareAI is designed as an open-source women's health initiative.
-Our goal is to encourage collaboration between:
-Developers
-Data scientists
-Healthcare researchers
-Women’s health advocates
-
-Together we can build better, accessible digital health tools for women worldwide.
 
 ### 🛣 Future Integrations.
 Future improvements planned:
-🩺 After teleconsultaion with doctor - based on the meeting we  can provide a user-friendly languae summary. 
+🩺 After teleconsultaion with doctor - based on the meeting we  can provide a user-friendly language summary. 
 ⌚ Wearable device integration
 🤖 AI health assistant chatbot
 📊 Advanced health analytics dashboard
@@ -189,7 +180,7 @@ This project does not provide medical diagnosis and should not replace consultat
 Users experiencing symptoms should seek advice from a licensed healthcare provider.
 
 ### 👩‍💻 Author
-Pragya
+Pragya Chauhan
 B.Tech Computer Science Student
 Women in Tech Hackathon Participant
 
