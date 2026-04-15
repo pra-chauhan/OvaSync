@@ -262,19 +262,21 @@ As an open-source platform, developers and researchers can contribute to improvi
 Doctor's can get a key to nter user profile and see their whole histry report.
 after teleconsultation user can read the whole communication summary - in patient language.
 
+
+## PCOS centric periods time periods prediction.
+Cllecting data from pcos patient of their cycles to create dataset and then train model to help detect/predict their next periods cycle time-range based on their history of last 3-4 cycles (~6months).
 ---
 
 # 9. Future Integrations
 The platform can be expanded with additional features in future versions.
 ## Mobile Application
 Develop Android and iOS versions for greater accessibility.
+
 ## Wearable Device Integration
 Integrate with fitness trackers to monitor:
 • Activity levels  
 • Sleep patterns  
 • Heart rate  
-
-
 
 ## Research Data Contribution
 Allow users to share anonymized health data to support future research and better AI models.
