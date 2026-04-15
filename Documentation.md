@@ -257,6 +257,12 @@ Preliminary risk analysis is possible without immediate medical tests.
 As an open-source platform, developers and researchers can contribute to improving the system.
 
 ---
+##### Currently working on...
+## Doctor's teleconsultation improved. 
+Doctor's can get a key to nter user profile and see their whole histry report.
+after teleconsultation user can read the whole communication summary - in patient language.
+
+---
 
 # 9. Future Integrations
 The platform can be expanded with additional features in future versions.
@@ -268,9 +274,7 @@ Integrate with fitness trackers to monitor:
 • Sleep patterns  
 • Heart rate  
 
-## Doctor's teleconsultation improved. 
-Doctor's can get a key to nter user profile and see their whole histry report.
-after teleconsultation user can read the whole communication summary - in patient language.
+
 
 ## Research Data Contribution
 Allow users to share anonymized health data to support future research and better AI models.
