@@ -60,6 +60,8 @@ const ExercisePage = () => {
         </p>
       </motion.div>
 
+
+
       {/* Today's Progress */}
       <GlassCard tilt className="flex items-center gap-4">
         <div className="flex-1">
@@ -79,6 +81,9 @@ const ExercisePage = () => {
           <p className="text-xs font-body text-muted-foreground">Keep going! Consistency is key.</p>
         </div>
       </GlassCard>
+
+
+
 
       {/* Recommended Exercises */}
       <div>
@@ -110,6 +115,9 @@ const ExercisePage = () => {
         </div>
       </div>
 
+
+
+
       {/* Restricted */}
       {restrictedExercises.length > 0 && (
         <div>
@@ -129,6 +137,9 @@ const ExercisePage = () => {
           </div>
         </div>
       )}
+
+
+
 
       {/* Weekly Progress */}
       <GlassCard>
