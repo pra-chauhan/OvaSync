@@ -377,7 +377,7 @@ const PCOSDetectionPage = () => {
 
       )}
 
-      {/* ADVANCED MODE stays SAME */}
+      {/* ADVANCED MODE  */}
 
       {mode === "advanced" &&
         Object.entries(featureCategories).map(([category, features]) => (

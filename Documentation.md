@@ -96,10 +96,103 @@ The system uses ensemble learning algorithms:
 • Gradient Boosting
 
 The best performing model achieved:
-
+XGBoost -- 
 Accuracy: ~92.7%  
 F1 Score: ~0.886  
 ROC-AUC: ~0.943
+
+================================================================================
+ MODEL COMPARISON & EVALUATION
+================================================================================
+
+===================
+ Random Forest
+===================
+
+ Accuracy:
+   Train: 0.9815
+   Test:  0.9174
+
+ Classification Metrics:
+   Precision: 0.9655
+   Recall:    0.7778
+   F1-Score:  0.8615
+   ROC-AUC:   0.9376
+
+ Classification Report:
+              precision    recall  f1-score   support
+
+     No PCOS       0.90      0.99      0.94        73
+        PCOS       0.97      0.78      0.86        36
+
+    accuracy                           0.92       109
+   macro avg       0.93      0.88      0.90       109
+weighted avg       0.92      0.92      0.91       109
+
+
+==============
+ XGBoost
+==============
+
+ Accuracy:
+   Train: 1.0000
+   Test:  0.9266
+
+ Classification Metrics:
+   Precision: 0.9118
+   Recall:    0.8611
+   F1-Score:  0.8857
+   ROC-AUC:   0.9429
+
+ Classification Report:
+              precision    recall  f1-score   support
+
+     No PCOS       0.93      0.96      0.95        73
+        PCOS       0.91      0.86      0.89        36
+
+    accuracy                           0.93       109
+   macro avg       0.92      0.91      0.92       109
+weighted avg       0.93      0.93      0.93       109
+
+
+=====================
+ Gradient Boosting
+=====================
+ Accuracy:
+   Train: 1.0000
+   Test:  0.8991
+
+ Classification Metrics:
+   Precision: 0.9032
+   Recall:    0.7778
+   F1-Score:  0.8358
+   ROC-AUC:   0.9315
+
+ Classification Report:
+              precision    recall  f1-score   support
+
+     No PCOS       0.90      0.96      0.93        73
+        PCOS       0.90      0.78      0.84        36
+
+    accuracy                           0.90       109
+   macro avg       0.90      0.87      0.88       109
+weighted avg       0.90      0.90      0.90       109
+
+
+================================================================================
+MODEL COMPARISON SUMMARY
+================================================================================
+
+            Model  Train Accuracy  Test Accuracy  Precision   Recall  F1-Score  ROC-AUC
+    Random Forest        0.981481       0.917431   0.965517 0.777778  0.861538 0.937595
+          XGBoost        1.000000       0.926606   0.911765 0.861111  0.885714 0.942922
+Gradient Boosting        1.000000       0.899083   0.903226 0.777778  0.835821 0.931507
+
+------------------------------------------
+ Best Model: XGBoost (Accuracy: 0.9266)
+------------------------------------------
+
+
 
 ## Explainable AI
 
@@ -196,10 +289,10 @@ The trained model analyzes these features and predicts the **probability of PCOS
 NariCareAI supports two screening modes.
 
 ### Basic Screening
-Uses lifestyle and symptom-based inputs to estimate early risk.
+Uses lifestyle and symptom-based inputs to estimate early risk. ~ 8 features input.
 
 ### Advanced Screening
-Allows users to include clinical indicators for more accurate predictions.
+Allows users to include clinical indicators for more accurate predictions. ~ 25 features input
 
 ---
 
@@ -235,6 +328,7 @@ Based on prediction results, users receive suggestions related to:
 • Exercise routines  
 • Yoga and stress reduction  
 • Preventive health practices
+• Doctor's consultation.
 
 ---
 ## 6. Diet recommendation using LLM

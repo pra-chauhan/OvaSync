@@ -157,3 +157,32 @@ export function saveTodayLog(log: DailyLog) {
   logs.push(log);
   localStorage.setItem(LOGS_KEY, JSON.stringify(logs));
 }
+
+// REMINDERS
+export const getReminders = () => {
+  return JSON.parse(localStorage.getItem("reminders") || "null") || [
+    { name: "Drink Water", active: true },
+    { name: "10-min Walk", active: false },
+    { name: "Stretch Break", active: false },
+    { name: "Sleep by 10 PM", active: false },
+  ];
+};
+
+export const saveReminders = (data: any) => {
+  localStorage.setItem("reminders", JSON.stringify(data));
+};
+
+
+// MEDICATION
+export const getMeds = () => {
+  return JSON.parse(localStorage.getItem("meds") || "null") || [
+    "Vitamin D",
+    "Iron",
+    "Inositol",
+    "Omega-3"
+  ];
+};
+
+export const saveMeds = (data: string[]) => {
+  localStorage.setItem("meds", JSON.stringify(data));
+};
