@@ -192,8 +192,8 @@ const handleGenerateDiet = async () => {
             <div className="grid grid-cols-2 gap-3">
               {[
                 { label: 'BMI', value: bmi },
-                { label: 'BMR', value: `${bmr} cal` },
-                { label: 'TDEE', value: `${tdee} cal` },
+                { label: 'BMR ~ Basal Metabolic Rate', value: `${bmr} cal` },
+                { label: 'TDEE ~ Total Daily Energy Expenditure', value: `${tdee} cal` },
                 { label: profile.hasPCOS ? 'PCOS Target' : 'Target', value: `${pcosAdjusted} cal` },
               ].map(({ label, value }) => (
                 <div key={label} className="glass-card p-3 text-center">
