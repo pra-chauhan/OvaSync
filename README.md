@@ -128,8 +128,11 @@ cd NariCareAI
 ```
 # Backend Setup
 ```bash
+cd backend 
 pip install -r requirements.txt
-uvicorn main:app --reload
+//CREATE .env file in backend folder 
+// activate virtual environmet - example, by : venv/Scripts/Activate ( to be followed on every time you run backend)
+uvicorn main:app --reload ( to be followed on every time you run backend)
 ```
 # Backend will run on:
 http://127.0.0.1:8000
@@ -138,7 +141,7 @@ http://127.0.0.1:8000
 ```bash
 cd frontend
 npm install
-npm run dev
+npm run dev ( to be followed on every time you run frontend)
 ```
 # Frontend will run on:
 http://localhost:5173
