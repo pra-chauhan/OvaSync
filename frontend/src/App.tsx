@@ -13,8 +13,9 @@ import DashboardPage from "./pages/patient/DashboardPage";
 import CycleTrackerPage from "./pages/patient/CycleTrackerPage";
 import PCOSDetectionPage from "./pages/patient/PCOSDetectionPage";
 import DietPlanPage from "./pages/patient/DietPlanPage";
-import ExercisePage from "./pages/patient/ExercisePage";
-// import FitnessPage from "./pages/FitnessPage";
+// import ExercisePage from "./pages/patient/ExercisePage";
+import EducationPage from "./pages/patient/EducationPage";
+
 import YogaPage from "./pages/patient/YogaPage";
 import DailyCarePage from "./pages/patient/DailyCarePage";
 import NotFound from "./pages/patient/NotFound";
@@ -63,8 +64,8 @@ const App = () => (
             <Route path="/cycle" element={<CycleTrackerPage />} />
             <Route path="/pcos" element={<PCOSDetectionPage />} />
             <Route path="/diet" element={<DietPlanPage />} />
-            <Route path="/exercise" element={<ExercisePage />} />
-              {/* <Route path="/fitness" element={<FitnessPage />} /> */}
+            {/* <Route path="/exercise" element={<ExercisePage />} /> */}
+            <Route path="/educate" element={<EducationPage />} /> 
             <Route path="/yoga" element={<YogaPage />} />
             <Route path="/daily-care" element={<DailyCarePage />} />
             <Route path="/health-dashboard" element={<HealthDashboardPage/>}/>

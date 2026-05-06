@@ -1,14 +1,15 @@
 import { NavLink } from 'react-router-dom';
-import { Home, Flower2, Microscope, Salad, Dumbbell, Heart, Clock } from 'lucide-react';
+import { Home, Flower2, Microscope, Salad, Dumbbell, Heart, Clock, Book } from 'lucide-react';
 
 const navItems = [
   { to: '/dashboard', icon: Home, label: 'Home' },
   { to: '/cycle', icon: Flower2, label: 'Cycle' },
   { to: '/pcos', icon: Microscope, label: 'PCOS' },
   { to: '/diet', icon: Salad, label: 'Diet' },
-  { to: '/exercise', icon: Dumbbell, label: 'Exercise' },
+ // { to: '/exercise', icon: Dumbbell, label: 'Exercise' },
   { to: '/yoga', icon: Heart, label: 'Yoga' },
   { to: '/daily-care', icon: Clock, label: 'Doctor' },
+  { to: '/educate', icon: Book, label: 'Educate' },
 ];
 
 const BottomNav = () => (
