@@ -216,44 +216,44 @@ The machine learning models were trained using a **public PCOS dataset sourced f
 
 The platform follows a layered architecture separating user interaction, backend services, and AI prediction systems.
 
-                ┌────────────────────────────┐
-                │        User Device         │
+                ┌───────────────────────────┐
+                │        User Device        │
                 │  Web Browser / Mobile UI  │
                 └─────────────┬─────────────┘
                               │
                               ▼
-                ┌────────────────────────────┐
-                │        Frontend Layer      │
+                ┌───────────────────────────┐
+                │        Frontend Layer     │
                 │  React + TypeScript UI    │
                 │  Forms • Dashboard • UX   │
                 └─────────────┬─────────────┘
                               │ REST API
                               ▼
-                ┌────────────────────────────┐
-                │        Backend Layer       │
-                │        FastAPI Server      │
-                │ Input Validation           │
-                │ Feature Processing         │
+                ┌───────────────────────────┐
+                │        Backend Layer      │
+                │        FastAPI Server     │
+                │ Input Validation          │
+                │ Feature Processing        │
                 └─────────────┬─────────────┘
                               │
                 ┌─────────────▼─────────────┐
-                │     ML Prediction Layer    │
-                │  XGBoost / Random Forest   │
-                │  Gradient Boosting Model   │
+                │     ML Prediction Layer   │
+                │  XGBoost / Random Forest  │
+                │  Gradient Boosting Mode   │
                 └─────────────┬─────────────┘
                               │
                               ▼
-                ┌────────────────────────────┐
-                │    Explainable AI Layer    │
-                │      SHAP Analysis         │
-                │  Feature Importance        │
+                ┌───────────────────────────┐
+                │    Explainable AI Layer   │
+                │      SHAP Analysis        │
+                │  Feature Importance       │
                 └─────────────┬─────────────┘
                               │
                               ▼
-                ┌────────────────────────────┐
-                │ Health Recommendation      │
-                │ Diet • Exercise • Yoga     │
-                │ Preventive Health Tips     │
+                ┌───────────────────────────┐
+                │ Health Recommendation     │
+                │ Diet • Exercise • Yoga    │
+                │ Preventive Health Tips    │
                 └─────────────┬─────────────┘
                               │
                               ▼
