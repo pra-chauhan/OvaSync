@@ -7,7 +7,7 @@ const navItems = [
   { to: '/pcos', icon: Microscope, label: 'PCOS' },
   { to: '/diet', icon: Salad, label: 'Diet' },
  // { to: '/exercise', icon: Dumbbell, label: 'Exercise' },
-  { to: '/yoga', icon: Heart, label: 'Yoga' },
+  { to: '/yoga', icon: Heart, label: 'Fitness' },
   { to: '/daily-care', icon: Clock, label: 'Doctor' },
   { to: '/educate', icon: Book, label: 'Educate' },
 ];
