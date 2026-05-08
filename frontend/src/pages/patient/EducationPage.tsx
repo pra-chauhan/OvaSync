@@ -4,7 +4,7 @@ import GlassCard from '@/components/ui/GlassCard';
 import { Input } from '@/components/ui/input';
 import { Search, BookOpen, PlayCircle } from 'lucide-react';
 
-/* ---------------- MOCK DATA (you can move to data.ts later) ---------------- */
+
 
 const ARTICLES = [
   {
@@ -39,13 +39,13 @@ const ARTICLES = [
   },
 ];
 
-/* ---------------- COMPONENT ---------------- */
+
 
 const EducationPage = () => {
   const [search, setSearch] = useState('');
   const [selected, setSelected] = useState<any>(null);
 
-  /* ---------------- FILTER ---------------- */
+
 
   const filtered = ARTICLES.filter(a =>
     a.title.toLowerCase().includes(search.toLowerCase()) ||
@@ -120,7 +120,7 @@ const EducationPage = () => {
         ))}
       </div>
 
-      {/* ---------------- MODAL VIEW ---------------- */}
+      {/* MODAL VIEW */}
 
       {selected && (
         <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
@@ -159,8 +159,7 @@ const EducationPage = () => {
         </div>
       )}
 
-      {/* ---------------- FUTURE AI CHATBOT ---------------- */}
-
+      
       <GlassCard className="border-l-4 border-primary">
         <p className="text-xs text-primary font-semibold mb-1">
           🤖 CHATBOT Coming Soon

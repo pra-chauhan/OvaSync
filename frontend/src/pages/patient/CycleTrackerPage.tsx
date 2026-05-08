@@ -214,33 +214,7 @@ const CycleTrackerPage = () => {
         </GlassCard>
       )}
 
-      {/* AI Insight */}
-      {/* <GlassCard>
-        <h3>🤖 AI Insight</h3>
-        <p>{getAIInsight()}</p>
-      </GlassCard> */}
-
-      {/* Symptoms */}
-      {/* <GlassCard>
-        <h3>Log Symptoms</h3>
-        <div className="flex flex-wrap gap-2">
-          {SYMPTOMS.map(s => (
-            <button
-              key={s}
-              onClick={() => toggleSymptom(s)}
-              className={cn(
-                'pill-badge',
-                log.symptoms.includes(s)
-                  ? 'bg-primary text-white'
-                  : 'glass-card'
-              )}
-            >
-              {s}
-            </button>
-          ))}
-        </div>
-      </GlassCard> */}
-
+     
     </div>
   );
 };

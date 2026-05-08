@@ -103,16 +103,7 @@ const handleGenerateDiet = async () => {
     });
   };
 
-  // Generate grocery list from today's meals
-  const groceryItems = useMemo(() => {
-    const items = new Set<string>();
-    Object.values(todayMeals).forEach(meal => {
-      meal.name.split(/[+&,]/).forEach(part => items.add(part.trim()));
-    });
-    
-    ['Brown Rice', 'Dal', 'Curd', 'Ghee', 'Turmeric', 'Fresh Vegetables', 'Fruits', 'Flaxseeds', 'Walnuts'].forEach(i => items.add(i));
-    return Array.from(items);
-  }, [todayMeals]);
+  
 
   return (
     <div className="space-y-5">
@@ -244,37 +235,7 @@ const handleGenerateDiet = async () => {
 
      
 
-      {/* Deficiency */}
-      {tab === 4 && (
-        <GlassCard>
-          <h3 className="font-display text-lg text-foreground flex items-center gap-2 mb-3">
-            <Stethoscope size={18} className="text-primary" /> Deficiency Detection
-          </h3>
-          <p className="text-xs font-body text-muted-foreground mb-3">Select symptoms you experience</p>
-          {DEFICIENCY_CHECKS.map((check, i) => (
-            <button
-              key={i}
-              onClick={() => setSelectedSymptoms(prev => {
-                const n = new Set(prev);
-                n.has(i) ? n.delete(i) : n.add(i);
-                return n;
-              })}
-              className={cn(
-                'w-full text-left p-3 rounded-lg mb-2 transition-all',
-                selectedSymptoms.has(i) ? 'glass-card border-primary border' : 'glass-card opacity-70',
-              )}
-            >
-              <p className="text-sm font-body font-semibold text-foreground">{check.symptom}</p>
-              {selectedSymptoms.has(i) && (
-                <motion.div initial={{ height: 0 }} animate={{ height: 'auto' }} className="overflow-hidden">
-                  <p className="text-xs font-body text-primary mt-1">Possible: {check.deficiency}</p>
-                  <p className="text-xs font-body text-muted-foreground">Try: {check.foods}</p>
-                </motion.div>
-              )}
-            </button>
-          ))}
-        </GlassCard>
-      )}
+      
     </div>
   );
 };
