@@ -8,7 +8,7 @@ import { getProfile } from "@/lib/store";
 import { Microscope, AlertTriangle, CheckCircle2, Info } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
-/* ---------------- FIELD DESCRIPTIONS ---------------- */
+
 
 const fieldInfo: any = {
   "Age (yrs)": "Your age in years (example: 22)",
@@ -41,7 +41,7 @@ const fieldInfo: any = {
 
   "Endometrium (mm)": "Thickness of uterus lining"
 };
-/* ---------------- HUMAN EXPLANATION MAP ---------------- */
+//HUMAN EXPLANATION MAP
 
 const explanationMap: any = {
   "Cycle(R/I)": "Irregular menstrual cycles",
@@ -53,7 +53,7 @@ const explanationMap: any = {
   "Reg.Exercise(Y/N)": "Lack of regular exercise"
 };
 
-/* ---------------- SMART RECOMMENDATIONS ---------------- */
+//SMART RECOMMENDATIONS
 
 const recommendationMap: any = {
   "BMI": "Focus on weight management with balanced diet and exercise",
@@ -65,8 +65,21 @@ const recommendationMap: any = {
   "Pimples(Y/N)": "Maintain skincare and balanced diet"
 };
 
+// ADVANCED SCREENING REQUIREMENTS
 
-/* ---------------- ADVANCED CATEGORIES ---------------- */
+const advancedScreeningRequirements = [
+  "Hormonal Blood Test Report",
+  "AMH (Anti-Mullerian Hormone)",
+  "Hemoglobin (Hb)",
+  "Vitamin D3 Report",
+  "Pelvic/Ultrasound Scan Report",
+  "Menstrual Cycle Details",
+  "Pulse Rate / Vital Signs",
+  "Height & Weight Measurements"
+];
+
+
+//ADVANCED CATEGORIES
 
 const featureCategories: any = {
 
@@ -111,7 +124,7 @@ const featureCategories: any = {
   ]
 };
 
-/* ---------------- COMPONENT ---------------- */
+
 
 const PCOSDetectionPage = () => {
 
@@ -165,7 +178,7 @@ const PCOSDetectionPage = () => {
     }));
   };
 
-  /* ---------------- DETECTION ---------------- */
+ //DETECTION
 
   const handleDetect = async () => {
 
@@ -180,7 +193,7 @@ const PCOSDetectionPage = () => {
         const basicPayload = {
           "Age (yrs)": form["Age (yrs)"],
           "BMI": form["BMI"],
-          "Cycle(R/I)": form["Cycle(R/I)"] === "R" ? 0 : 1,
+          "Cycle(R/I)": form["Cycle(R/I)"] === "R" ? 1 : 0,
           "Weight gain(Y/N)": form["Weight gain(Y/N)"],
           "hair growth(Y/N)": form["hair growth(Y/N)"],
           "Pimples(Y/N)": form["Pimples(Y/N)"],
@@ -194,7 +207,7 @@ const PCOSDetectionPage = () => {
 
         const advancedPayload = {
           ...form,
-          "Cycle(R/I)": form["Cycle(R/I)"] === "R" ? 0 : 1
+          "Cycle(R/I)": form["Cycle(R/I)"] === "R" ? 1 : 0
         };
 
         response = await predictAdvanced(advancedPayload);
@@ -219,21 +232,31 @@ const PCOSDetectionPage = () => {
         .map((f: any) => recommendationMap[f.feature])
         .filter(Boolean);
 
-      const resultData = {
-        risk,
-        probability,
-        lifestyleScore,
-        stressScore,
-        factors: response.top_factors || [],
-        recommendations: [
-          ...new Set([
-            ...dynamicRecommendations,
-            "Maintain balanced diet",
-            "Exercise regularly",
-            "Track menstrual cycle"
-          ])
-        ]
-      };
+      const shouldRecommendAdvanced =
+  mode === "basic" && probability > 60;
+
+const resultData = {
+  risk,
+  probability,
+  lifestyleScore,
+  stressScore,
+  factors: response.top_factors || [],
+
+  recommendAdvanced: shouldRecommendAdvanced,
+
+  requiredReports: shouldRecommendAdvanced
+    ? advancedScreeningRequirements
+    : [],
+
+  recommendations: [
+    ...new Set([
+      ...dynamicRecommendations,
+      "Maintain balanced diet",
+      "Exercise regularly",
+      "Track menstrual cycle"
+    ])
+  ]
+};
 
       setResult(resultData);
 
@@ -252,7 +275,7 @@ const PCOSDetectionPage = () => {
 
   const inputClass = "soft-input w-full px-3 py-2 text-sm border rounded";
 
-  /* ---------------- UI ---------------- */
+  //UI
 
   return (
 
@@ -273,14 +296,21 @@ const PCOSDetectionPage = () => {
 
         <Button
           variant={mode === "basic" ? "default" : "outline"}
-          onClick={() => setMode("basic")}
+          onClick={() => {
+            setMode("basic");
+            setResult(null);
+          }}
         >
           Basic Screening
         </Button>
 
         <Button
           variant={mode === "advanced" ? "default" : "outline"}
-          onClick={() => setMode("advanced")}
+          onClick={() => {
+            setMode("advanced");
+            setResult(null);
+          }}
+
         >
           Advanced Screening
         </Button>
@@ -574,8 +604,51 @@ const PCOSDetectionPage = () => {
       </ul>
     </div>
 
-  </GlassCard>
 
+{/* ADVANCED SCREENING RECOMMENDATION */}
+
+{result.recommendAdvanced && (
+
+  <div className="mt-6 p-4 rounded-xl border bg-pink-50 space-y-3">
+
+    <h4 className="font-semibold text-pink-700">
+      Advanced Screening Recommended
+    </h4>
+
+    <p className="text-sm text-muted-foreground">
+      Your PCOS risk score is above 60%.
+      For a more accurate clinical assessment,
+      advanced screening is recommended.
+    </p>
+
+    <div>
+      <h5 className="font-medium mb-2">
+        Required Medical Reports / Tests:
+      </h5>
+
+      <ul className="list-disc ml-5 text-sm space-y-1">
+
+        {result.requiredReports.map((report: string, i: number) => (
+          <li key={i}>{report}</li>
+        ))}
+
+      </ul>
+    </div>
+
+    <Button
+      className="mt-2"
+      onClick={() => {
+        setMode("advanced");
+        setResult(null);
+      }}
+    >
+      Proceed to Advanced Screening
+    </Button>
+
+  </div>
+
+)}
+  </GlassCard>
 )}
 
     </div>

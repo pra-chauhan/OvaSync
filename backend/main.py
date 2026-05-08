@@ -40,18 +40,17 @@ app = FastAPI()
 
 PCOSRecord.metadata.create_all(bind=engine)
 
-# =========================
 # LOAD MODELS
-# =========================
 advanced_model = joblib.load("models/pcos_best_model.pkl")
 advanced_features = joblib.load("models/pcos_selected_features.pkl")
 
 basic_model = joblib.load("models/pcos_basic_model.pkl")
 basic_features = joblib.load("models/pcos_basic_features.pkl")
 
-# =========================
-# SHAP EXPLAINERS (SAFE INIT)
-# =========================
+basic_scaler = joblib.load("models/basic_scaler.pkl")
+advanced_scaler = joblib.load("models/advanced_scaler.pkl")
+
+# SHAP EXPLAINERS 
 try:
     advanced_explainer = shap.TreeExplainer(advanced_model)
     basic_explainer = shap.TreeExplainer(basic_model)
@@ -60,9 +59,7 @@ except Exception as e:
     advanced_explainer = None
     basic_explainer = None
 
-# =========================
 # CORS
-# =========================
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -71,15 +68,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# =========================
 # INPUT SCHEMA
-# =========================
 class PatientData(BaseModel):
     data: dict
 
-# =========================
-# JSON CLEANER (NEW FIX)
-# =========================
+# JSON CLEANER
 def extract_json(text):
     try:
         # remove markdown ```json or ```
@@ -97,20 +90,26 @@ def extract_json(text):
         print("❌ FINAL JSON EXTRACTION FAILED:", e)
         return None
 
-# =========================
-#  HYBRID EXPLANATION (SHAP + FALLBACK)
-# =========================
-def get_explanation(explainer, input_df, feature_names):
+# SHAP + FALLBACK explanation
+def get_explanation(explainer, scaled_input, input_df, feature_names):
 
-    # =========================
-    # TRY SHAP
-    # =========================
+    # ---------------- SHAP EXPLANATION ----------------
     if explainer is not None:
         try:
-            shap_values = explainer(input_df)
-            values = shap_values.values[0]
+            shap_values = explainer.shap_values(scaled_input)
 
-            top_idx = np.argsort(np.abs(values))[-5:]
+            # Handle different SHAP formats
+            if isinstance(shap_values, list):
+                values = shap_values[1][0]
+
+            elif hasattr(shap_values, "values"):
+                values = shap_values.values[0]
+
+            else:
+                values = shap_values[0]
+
+            # Top 5 important features
+            top_idx = np.argsort(np.abs(values))[::-1][:5]
 
             return [
                 {
@@ -118,39 +117,67 @@ def get_explanation(explainer, input_df, feature_names):
                     "impact": float(values[i]),
                     "value": float(input_df.iloc[0][feature_names[i]])
                 }
-                for i in top_idx[::-1]
+                for i in top_idx
             ]
 
         except Exception as e:
             print("SHAP FAILED → using fallback:", e)
 
-    
+    # ---------------- FALLBACK ----------------
     data = input_df.iloc[0].to_dict()
+
     fallback = []
 
     if data.get("BMI", 0) > 25:
-        fallback.append({"feature": "BMI", "impact": 0.3})
+        fallback.append({
+            "feature": "BMI",
+            "impact": 0.30,
+            "value": data.get("BMI")
+        })
 
     if data.get("Cycle(R/I)", 0) == 1:
-        fallback.append({"feature": "Cycle(R/I)", "impact": 0.4})
+        fallback.append({
+            "feature": "Cycle(R/I)",
+            "impact": 0.40,
+            "value": data.get("Cycle(R/I)")
+        })
 
     if data.get("Weight gain(Y/N)", 0) == 1:
-        fallback.append({"feature": "Weight gain(Y/N)", "impact": 0.25})
+        fallback.append({
+            "feature": "Weight gain(Y/N)",
+            "impact": 0.25,
+            "value": data.get("Weight gain(Y/N)")
+        })
 
     if data.get("hair growth(Y/N)", 0) == 1:
-        fallback.append({"feature": "hair growth(Y/N)", "impact": 0.35})
+        fallback.append({
+            "feature": "hair growth(Y/N)",
+            "impact": 0.35,
+            "value": data.get("hair growth(Y/N)")
+        })
 
     if data.get("Pimples(Y/N)", 0) == 1:
-        fallback.append({"feature": "Pimples(Y/N)", "impact": 0.2})
+        fallback.append({
+            "feature": "Pimples(Y/N)",
+            "impact": 0.20,
+            "value": data.get("Pimples(Y/N)")
+        })
 
     if data.get("Fast food (Y/N)", 0) == 1:
-        fallback.append({"feature": "Fast food (Y/N)", "impact": 0.15})
+        fallback.append({
+            "feature": "Fast food (Y/N)",
+            "impact": 0.15,
+            "value": data.get("Fast food (Y/N)")
+        })
 
     if data.get("Reg.Exercise(Y/N)", 0) == 0:
-        fallback.append({"feature": "Reg.Exercise(Y/N)", "impact": 0.2})
+        fallback.append({
+            "feature": "Reg.Exercise(Y/N)",
+            "impact": 0.20,
+            "value": data.get("Reg.Exercise(Y/N)")
+        })
 
     return fallback[:5]
-
 
 
 def prepare_input(patient_data, feature_list):
@@ -167,9 +194,6 @@ def prepare_input(patient_data, feature_list):
     return input_df
 
 
-# =========================
-#LIFESTYLE SCORE
-# =========================
 def calculate_lifestyle_score(data):
 
     score = 100
@@ -186,9 +210,6 @@ def calculate_lifestyle_score(data):
     return max(score, 0)
 
 
-# =========================
-# STRESS SCORE
-# =========================
 def calculate_stress_score(data):
 
     score = 0
@@ -205,20 +226,20 @@ def calculate_stress_score(data):
     return min(score, 100)
 
 
-# =========================
-# BASIC SCREENING
-# =========================
 @app.post("/predict-basic")
 def predict_basic(patient: PatientData):
 
     try:
         input_df = prepare_input(patient.data, basic_features)
 
-        prob = basic_model.predict_proba(input_df)[0][1]
+        scaled_input = basic_scaler.transform(input_df)
+
+        prob = basic_model.predict_proba(scaled_input)[0][1]
         prediction = int(prob > 0.5)
 
         top_factors = get_explanation(
             basic_explainer,
+            scaled_input,
             input_df,
             basic_features
         )
@@ -261,20 +282,20 @@ def predict_basic(patient: PatientData):
         return {"error": str(e)}
 
 
-# =========================
-# ADVANCED SCREENING
-# =========================
 @app.post("/predict-advanced")
 def predict_advanced(patient: PatientData):
 
     try:
         input_df = prepare_input(patient.data, advanced_features)
 
-        prediction = advanced_model.predict(input_df)[0]
-        prob = advanced_model.predict_proba(input_df)[0][1]
+        scaled_input = advanced_scaler.transform(input_df)
 
+        prob = advanced_model.predict_proba(scaled_input)[0][1]
+        prediction = int(prob > 0.5)
+    
         top_factors = get_explanation(
             advanced_explainer,
+            scaled_input,
             input_df,
             advanced_features
         )
@@ -289,7 +310,7 @@ def predict_advanced(patient: PatientData):
             bmi=patient.data.get("BMI", 0),
             cycle=patient.data.get("Cycle(R/I)", 0),
 
-            prediction=int(prediction),
+            prediction=prediction,
             probability=float(prob),
 
             lifestyle_score=lifestyle,
@@ -305,7 +326,7 @@ def predict_advanced(patient: PatientData):
 
         return {
             "mode": "advanced",
-            "prediction": int(prediction),
+            "prediction":prediction,
             "pcos_probability": float(prob),
             "top_factors": top_factors,
             "lifestyle_score": lifestyle,
@@ -317,9 +338,6 @@ def predict_advanced(patient: PatientData):
         return {"error": str(e)}
 
 
-# =========================
-#DIET GENERATION
-# =========================
 @app.post("/generate-diet")
 def generate_diet():
 
