@@ -310,7 +310,7 @@ const YogaPage = () => {
       {/* HEADER */}
       <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}>
         <h1 className="text-2xl font-display text-foreground flex items-center gap-2">
-          <Heart className="text-primary" size={24} /> Fitness & Yoga
+          <Heart className="text-primary" size={24} /> Fitness 
         </h1>
       </motion.div>
 

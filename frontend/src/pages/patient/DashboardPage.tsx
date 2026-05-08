@@ -523,6 +523,8 @@ import {
   calculateTDEE
 } from '@/lib/store';
 
+
+
 const DashboardPage = () => {
   const profile = getProfile()!;
   const [log, setLog] = useState(getTodayLog());
@@ -640,6 +642,10 @@ const DashboardPage = () => {
           Based on your cycle phase, light exercise + hydration will improve hormonal balance today.
         </p>
       </GlassCard>
+
+      
+
+
 
       {/* Reminders */}
       <GlassCard>
