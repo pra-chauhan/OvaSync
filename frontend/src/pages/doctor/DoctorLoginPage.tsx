@@ -110,12 +110,12 @@ const DoctorLoginPage = () => {
           </Button>
 
           <p className="text-xs text-center text-muted-foreground">
-            Patient portal?{' '}
+            Not a doctor?{' '}
             <span
               className="text-primary cursor-pointer underline"
               onClick={() => navigate('/')}
             >
-              Go to Patient App
+              Back to home page
             </span>
           </p>
         </motion.div>
