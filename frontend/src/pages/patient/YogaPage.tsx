@@ -235,7 +235,7 @@ const TABS = ['Asanas', 'Pranayam', 'Stress Relief', 'Desk Stretch', 'Exercise',
 const YogaPage = () => {
   const [tab, setTab] = useState(0);
 
-  /* ---------------- TIMER ---------------- */
+  //timer
   const [timerSeconds, setTimerSeconds] = useState(300);
   const [timerRunning, setTimerRunning] = useState(false);
   const [timerPreset, setTimerPreset] = useState(300);
@@ -254,7 +254,7 @@ const YogaPage = () => {
   const formatTime = (s: number) =>
     `${Math.floor(s / 60)}:${(s % 60).toString().padStart(2, '0')}`;
 
-  /* ---------------- EXERCISE LOGIC ---------------- */
+  //exercise
 
   const profile = getProfile()!;
   const dayOfCycle = getDayOfCycle(profile.lastPeriodDate);
@@ -314,7 +314,7 @@ const YogaPage = () => {
         </h1>
       </motion.div>
 
-      {/* TAB BAR */}
+     //tab barrrrrr
       <div className="flex gap-1 overflow-x-auto pb-1 glass-card p-1">
         {TABS.map((t, i) => (
           <button
@@ -332,7 +332,7 @@ const YogaPage = () => {
         ))}
       </div>
 
-      {/* ---------------- YOGA TABS ---------------- */}
+      //tabsssss
 
       {tab === 0 && (
         <div className="space-y-3">
@@ -371,7 +371,6 @@ const YogaPage = () => {
         </div>
       )}
 
-      {/* ---------------- 💪 EXERCISE TAB ---------------- */}
 
       {tab === 4 && (
         <div className="space-y-5">
@@ -478,7 +477,7 @@ const YogaPage = () => {
         </div>
       )}
 
-      {/* ---------------- TIMER ---------------- */}
+      //timer
 
       {tab === 5 && (
         <GlassCard className="text-center py-8">
